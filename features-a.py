@@ -66,6 +66,7 @@ tickers = [
     "BNTX",
     "BOX",
     "BSX",
+    "BTC-USD",
     "BYND",
     "BZFD",
     "CCJ",
