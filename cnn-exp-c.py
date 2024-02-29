@@ -24,6 +24,8 @@ from datetime import datetime
 from IPython.display import clear_output
 import seaborn as sns
 
+import config
+
 
 #tickers = ['NVDA']
 # tickers = ['QCOM', 'ASML', 'MU', 'ON', 'AMD', 'NVDA', 'INTC']
@@ -857,7 +859,7 @@ def compute_models(tickers, train_test_cutoff='2023-1-18', train_valid_ratio=0.7
 
 if __name__=='__main__':
 
-    TRAIN_TEST_CUTOFF = '2023-1-18'
+    TRAIN_TEST_CUTOFF = config.TRAIN_TEST_CUTOFF
     TRAIN_VALID_RATIO = 0.75
 
     perf_file = './models/model_performance.csv'
