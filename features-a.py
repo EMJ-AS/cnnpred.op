@@ -16,7 +16,7 @@ RAW_DIR = 'data/raw'
 #tickers  = ['AAPL', 'ADBE', 'ADI', 'ADP', 'ADSK', 'AMAT', 'AMBA', 'AMD', 'AMZN', 'ANET', 'ARKK', 'ASML', 'ATER', 'AVAV', 'AVGO', 'AYX', 'BABA', 'BB', 'BIDU', 'BILI', 'BKNG', 'BL', 'BLUE', 'BOX', 'BSX', 'BYND', 'CCJ', 'CDNS', 'CDW', 'CHGG', 'CHKP', 'CHWY', 'CMCSA', 'CORT', 'CRM', 'CRSP', 'CRWD', 'CSCO', 'CSIQ', 'CVNA', 'CYBR', 'DBX', 'DIS', 'DKNG', 'DNN', 'DOCU', 'DT', 'DXCM', 'EA', 'EB', 'EBAY', 'EDIT', 'ENPH', 'ESTC', 'ETSY', 'EXAS', 'EXPE', 'FATE', 'FCEL', 'FI', 'FIS', 'FSLY', 'FTCH', 'FTNT', 'FUBO', 'FUTU', 'FVRR', 'GDS', 'GLOB', 'GME', 'GNRC', 'GOGO', 'GOOGL', 'GPRO', 'GRPN', 'HIMX', 'HPE', 'HUBS', 'IAC', 'ILMN', 'IMAX', 'INTC', 'INTU', 'IONS', 'ISRG', 'JD', 'KLAC', 'KOPN', 'KURA', 'KWEB', 'LC', 'LITE', 'LOGI', 'LRCX', 'LULU', 'LYFT', 'MARA', 'MCHP', 'MDB', 'MELI', 'META', 'MGNI', 'MRNA', 'MRVL', 'MSFT', 'MSTR', 'MU', 'MVIS', 'MVST', 'NFLX', 'NICE', 'NIO', 'NKLA', 'NOW', 'NTAP', 'NTDOY', 'NTES', 'NTLA', 'NTNX', 'NVAX', 'NVDA', 'NVTA', 'NXPI', 'NYT', 'OKTA', 'ON', 'ORCL', 'PACB', 'PANW', 'PARA', 'PAYC', 'PD', 'PDD', 'PENN', 'PINS', 'PLUG', 'PSTG', 'PYPL', 'QCOM', 'RDFN', 'REAL', 'RNG', 'ROKU', 'RVLV', 'SABR', 'SAP', 'SBGI', 'SE', 'SFIX', 'SFTBY', 'SGBI', 'SGML', 'SHOP', 'SMAR', 'SMCI', 'SMH', 'SNAP', 'SNPS', 'SOHU', 'SONO', 'SONY', 'SPCE', 'SPLK', 'SPOT', 'SQ', 'STM', 'T', 'TDC', 'TDOC', 'TEAM', 'TENB', 'TIGR', 'TNDM', 'TSLA', 'TTD', 'TTWO', 'TWLO', 'TXN', 'UBER', 'UPWK', 'VEEV', 'VIPS', 'VZ', 'W', 'WB', 'WBD', 'WDAY', 'WDC', 'WIX', 'XBI', 'YELP', 'YEXT', 'Z', 'ZM', 'ZS']
 #tickers = ['AAPL', 'NVDA']
 tickers = stock_scope.ALL_TICKERS
-#tickers = ['AAPL']
+#tickers = ['MNDY', 'MCHP', 'WDC', 'TTD']
 
 def create_features(ticker=None, data=None):
     if ticker is None or data is None:
@@ -163,6 +163,9 @@ try:
 
             # Compute mutual information up until start of test period
             X_mi = all_df[all_df.index < config.TRAIN_TEST_CUTOFF]
+            # if there are no rows before train-test cutoff, skip this ticker
+            if X_mi.shape[0] == 0:
+                continue
             y_mi = (X_mi[f'{ticker}_Close'].pct_change().shift(-1) > 0).astype(int)
             X_mi = X_mi.drop([f'{ticker}_Close'], axis=1)
 

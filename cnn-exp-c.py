@@ -25,6 +25,7 @@ from IPython.display import clear_output
 import seaborn as sns
 
 import config
+from dataset import stock_scope
 
 
 #tickers = ['NVDA']
@@ -33,314 +34,9 @@ import config
 # tickers  = ['AAPL', 'ADBE', 'ADI', 'ADP', 'ADPT', 'ADSK', 'AMAT', 'AMBA', 'AMD', 'AMZN', 'ANET', 'ARKK', 'ASML', 'ATER', 'AVAV', 'AVGO', 'AYX', 'BABA', 'BB', 'BIDU', 'BILI', 'BKNG', 'BL', 'BLUE', 'BOX', 'BSX', 'BYND', 'CCJ', 'CDNS', 'CDW', 'CHGG', 'CHKP', 'CHWY', 'CMCSA', 'CORT', 'CRM', 'CRSP', 'CRWD', 'CSCO', 'CSIQ', 'CVNA', 'CYBR', 'DBX', 'DIS', 'DKNG', 'DNN', 'DOCU', 'DT', 'DXCM', 'EA', 'EB', 'EBAY', 'EDIT', 'ENPH', 'ESTC', 'ETSY', 'EXAS', 'EXPE', 'FATE', 'FCEL', 'FI', 'FIS', 'FSLY', 'FTCH', 'FTNT', 'FUBO', 'FUTU', 'FVRR', 'GDS', 'GLOB', 'GME', 'GNRC', 'GOGO', 'GOOGL', 'GPRO', 'GRPN', 'HIMX', 'HPE', 'HUBS', 'IAC', 'ILMN', 'IMAX', 'INTC', 'INTU', 'IONS', 'ISRG', 'JD', 'KLAC', 'KOPN', 'KURA', 'KWEB', 'LC', 'LITE', 'LOGI', 'LRCX', 'LULU', 'LYFT', 'MARA', 'MCHP', 'MDB', 'MELI', 'META', 'MGNI', 'MRNA', 'MRVL', 'MSFT', 'MSTR', 'MU', 'MVIS', 'MVST', 'NFLX', 'NICE', 'NIO', 'NKLA', 'NOW', 'NTAP', 'NTDOY', 'NTES', 'NTLA', 'NTNX', 'NVAX', 'NVDA', 'NVTA', 'NXPI', 'NYT', 'OKTA', 'ON', 'ORCL', 'PACB', 'PANW', 'PARA', 'PAYC', 'PD', 'PDD', 'PENN', 'PINS', 'PLUG', 'PSTG', 'PYPL', 'QCOM', 'RDFN', 'REAL', 'RNG', 'ROKU', 'RVLV', 'SABR', 'SAP', 'SBGI', 'SE', 'SFIX', 'SFTBY', 'SGBI', 'SGML', 'SHOP', 'SMAR', 'SMCI', 'SMH', 'SNAP', 'SNPS', 'SOHU', 'SONO', 'SONY', 'SPCE', 'SPLK', 'SPOT', 'SQ', 'STM', 'T', 'TDC', 'TDOC', 'TEAM', 'TENB', 'TIGR', 'TNDM', 'TSLA', 'TTD', 'TTWO', 'TWLO', 'TXN', 'UBER', 'UPWK', 'VEEV', 'VIPS', 'VZ', 'W', 'WB', 'WBD', 'WDAY', 'WDC', 'WIX', 'XBI', 'YELP', 'YEXT', 'Z', 'ZM', 'ZS']
 #import json
 #tickers = json.load(open('all_stock_tickers.json'))
-tickers = [
-    "0700.HK",
-    "1024.HK",
-    "1263.HK",
-    "1810.HK",
-    "2330.TW",
-    "2454.TW",
-    "3668.T",
-    "3690.HK",
-    "7832.T",
-    "9684.T",
-    "9697.T",
-    "9992.HK",
-    "AAPL",
-    "ACCD",
-    "ADBE",
-    "ADE.OL",
-    "ADI",
-    "ADP",
-#    "ADPT",
-    "ADSK",
-    "ADYEN.AS",
-    "AFRM",
-    "AI",
-    "AMAT",
-    "AMBA",
-    "AMD",
-    "AMZN",
-    "ANET",
-    "ARKK",
-    "ARRY",
-    "ASAN",
-    "ASML",
-    "ATER",
-#    "ATVI",
-    "ATZ.TO",
-    "AVAV",
-    "AVGO",
-    "AYX",
-    "BABA",
-    "BB",
-    "BBD-B.TO",
-    "BEAM",
-    "BIDU",
-    "BIGC",
-    "BILI",
-    "BILL",
-    "BITO",
-    "BKNG",
-    "BL",
-    "BLND",
-    "BLUE",
-    "BMBL",
-    "BNTX",
-    "BOX",
-    "BSX",
-    "BYND",
-    "BTC-USD",
-    "BZFD",
-    "CCJ",
-    "CDNS",
-    "CDW",
-    "CHGG",
-    "CHKP",
-    "CHWY",
-    "CMCSA",
-    "COIN",
-    "CORT",
-    "CPNG",
-    "CRM",
-    "CRSP",
-    "CRWD",
-    "CSCO",
-    "CSIQ",
-    "CSU.TO",
-    "CVNA",
-    "CYBR",
-    "DASH",
-    "DBX",
-    "DDOG",
-    "DHER.DE",
-    "DIS",
-    "DKNG",
-    "DLO",
-    "DNN",
-    "DOCS",
-    "DOCU",
-    "DSY.PA",
-    "DT",
-    "DUOL",
-    "DXCM",
-    "EA",
-    "EB",
-    "EBAY",
-    "EDIT",
-    "EDR",
-    "ENPH",
-    "ENVX",
-    "ESTC",
-    "ETH-USD",
-    "ETSY",
-    "EXAS",
-    "EXPE",
-    "FATE",
-    "FCEL",
-    "FI",
-    "FIS",
-    "FLTR.L",
-    "FREY",
-    "FSLY",
-    "FTCH",
-    "FTNT",
-    "FUBO",
-    "FUTU",
-    "FVRR",
-    "GCT",
-    "GDRX",
-    "GDS",
-    "GFS",
-    "GLBE",
-    "GLOB",
-    "GLXY.TO",
-    "GME",
-    "GNRC",
-    "GOGO",
-    "GOOGL",
-    "GPRO",
-    "GRAB",
-    "GRPN",
-    "GTLB",
-    "HCP",
-    "HFG.DE",
-    "HIMX",
-    "HOOD",
-    "HPE",
-    "HUBS",
-    "IAC",
-    "IBM",
-    "ILMN",
-    "IMAX",
-    "INTC",
-    "INTU",
-    "IONS",
-    "IPX",
-    "ISRG",
-    "JD",
-    "JOBY",
-    "KAHOT.OL",
-    "KC",
-    "KLAC",
-    "KOPN",
-    "KURA",
-    "KWEB",
-    "LC",
-    "LCID",
-    "LI",
-    "LITE",
-    "LMND",
-    "LOGI",
-    "LRCX",
-    "LSPD",
-    "LULU",
-    "LYFT",
-    "MARA",
-    "MBLY",
-    "MCHP",
-    "MDB",
-    "ME",
-    "MELI",
-    "META",
-    "MGNI",
-    "MNDY",
-    "MQ",
-    "MRNA",
-    "MRVL",
-    "MSFT",
-    "MSTR",
-    "MU",
-    "MVIS",
-    "MVST",
-    "NCNO",
-    "NET",
-#    "NEWR",
-    "NFLX",
-    "NICE",
-    "NIO",
-    "NKLA",
-    "NOW",
-    "NTAP",
-    "NTDOY",
-    "NTES",
-    "NTLA",
-    "NTNX",
-    "NVAX",
-    "NVDA",
-    "NVTA",
-    "NXPI",
-    "NYT",
-    "OKTA",
-    "ON",
-    "OPAD",
-    "OPEN",
-    "ORCL",
-    "OTLY",
-    "PACB",
-    "PANW",
-    "PARA",
-    "PATH",
-    "PAYC",
-    "PD",
-    "PDD",
-    "PENN",
-    "PINS",
-    "PLTK",
-    "PLTR",
-    "PLUG",
-    "PSTG",
-    "PTON",
-    "PYPL",
-    "QCOM",
-    "QS",
-    "RBLX",
-    "RDFN",
-    "REAL",
-    "RENT",
-    "RIVN",
-    "RNG",
-    "ROKU",
-    "ROOT",
-    "RSI",
-    "RVLV",
-    "S",
-    "SABR",
-    "SANA",
-    "SAP",
-    "SBGI",
-    "SDGR",
-    "SE",
-    "SFIX",
-    "SFTBY",
-    "SGBI",
-    "SGML",
-    "SHOP",
-    "SMAR",
-    "SMCI",
-    "SMH",
-    "SMR",
-    "SNAP",
-    "SNOW",
-    "SNPS",
-    "SOFI",
-    "SOHU",
-    "SONO",
-    "SONY",
-    "SPCE",
-    "SPLK",
-    "SPOT",
-    "SQ",
-    "STM",
-    "T",
-    "TBLA",
-    "TDC",
-    "TDOC",
-    "TEAM",
-    "TENB",
-    "TIGR",
-    "TKWY.AS",
-    "TNDM",
-    "TOST",
-#    "TRUE",
-    "TSLA",
-    "TTD",
-    "TTWO",
-    "TWLO",
-    "TXN",
-    "U",
-    "UBER",
-    "UBI.PA",
-    "UPST",
-    "UPWK",
-    "V",
-    "VEEV",
-    "VIPS",
-    "VIV.PA",
-    "VRT",
-    "VTEX",
-    "VZ",
-    "W",
-    "WB",
-    "WBD",
-    "WDAY",
-    "WDC",
-    "WISH",
-    "WIX",
-    "WLDS",
-    "WNDR.TO",
-#    "WWE",
-    "XBI",
-    "XPEV",
-    "XRO.AX",
-    "YELP",
-    "YEXT",
-    "Z",
-    "ZAL.DE",
-    "ZI",
-    "ZM",
-    "ZS"
-]
+
+tickers = stock_scope.ALL_TICKERS
+#tickers = ['ARRY']
 
 
 # https://datascience.stackexchange.com/questions/45165/how-to-get-accuracy-f1-precision-and-recall-for-a-keras-model
@@ -541,6 +237,7 @@ def datagen(data, seq_len, batch_size, targetcol, kind, TRAIN_TEST_CUTOFF=None, 
 
 
 def datagen_gbm(data, targetcol, kind, TRAIN_TEST_CUTOFF=None, TRAIN_VALID_RATIO=0.8):
+    print('datagen_gbm train_test_cutoff: ', TRAIN_TEST_CUTOFF)
     """
     Creates train and validation datasets for LightGBM
     """
@@ -558,7 +255,7 @@ def datagen_gbm(data, targetcol, kind, TRAIN_TEST_CUTOFF=None, TRAIN_VALID_RATIO
         # else:
         #     raise NotImplementedError
 
-        n = len(df)
+        n = len(index)
         if kind == 'train':
             frame = df.iloc[0:split]
         else:
@@ -650,11 +347,13 @@ def create_datasets(DATADIR, TRAIN_VALID_RATIO, TRAIN_TEST_CUTOFF, ticker='', \
             # Assign the calculated values to the dataframe
             # df['nth_minus_nth_minus_ith_pct_change'] = percentage_change_relative
             X['Target'] = positive_percentage_indicator
+
             if for_current_day:
                 X['Target'].ffill(inplace=True)
 
             # Drop rows with NaN
             X.dropna(inplace=True)
+
             # Fit the standard scaler using the training dataset
             X['Target'].astype(int)
         
@@ -667,49 +366,6 @@ def create_datasets(DATADIR, TRAIN_VALID_RATIO, TRAIN_TEST_CUTOFF, ticker='', \
             data[name] = X
     return data
 
-
-def train_cnnpred_2d(data, seq_len=60, batch_size=128, n_epochs=10, n_features=0):
-    """ Train a 2D-CNNpred model for a binary classification problem """
-
-    if n_features == 0:
-        raise ValueError("Must specify number of features to use that is not zero")
-    model_cnn = cnnpred_2d(seq_len, n_features)
-    model_cnn.compile(optimizer="adam", loss="mae", metrics=["acc", f1macro])
-    model_cnn.summary()  # print model structure to console
-
-    # Set up callbacks and fit the model
-    # We use custom validation score f1macro() and hence monitor for "val_f1macro"
-    checkpoint_path = "./models//cp2d-{epoch}-{val_f1macro:.2f}.keras"
-    callbacks = [
-        ModelCheckpoint(checkpoint_path, 
-                        monitor='val_f1macro', mode="max",
-                        verbose=0, save_best_only=True, save_weights_only=False, save_freq="epoch")
-    ]
-    model_cnn.fit(datagen(data, seq_len, batch_size, "Target", "train"),
-            validation_data=datagen(data, seq_len, batch_size, "Target", "valid"),
-            epochs=n_epochs, steps_per_epoch=400, validation_steps=10, verbose=1, callbacks=callbacks)
-
-    return model_cnn
-
-
-def test_cnnpred_2d(model_cnn, data, seq_len=60, TRAIN_TEST_CUTOFF=None):
-    with warnings.catch_warnings():
-        warnings.filterwarnings("ignore", category=Warning)
-        pd.set_option('display.max_rows', None)
-
-        # Prepare test data
-        test_data, test_target = testgen(data, seq_len, "Target", TRAIN_TEST_CUTOFF)
-
-        # Test the model
-        print(f'test_target shape: {test_target.shape}')
-
-        # Load the trained CNN model.add_validation
-        # model_cnn = load_model('./models/cp2d-8-0.55.keras')
-        
-        test_out = model_cnn.predict(test_data)
-
-        calculate_metrics(test_target, np.reshape(test_out, -1))
-    
 
 def train_lightgbm(data, ticker=None, TRAIN_TEST_CUTOFF=None, TRAIN_VALID_RATIO=None, model_prefix='gbm'):
 
@@ -737,6 +393,7 @@ def train_lightgbm(data, ticker=None, TRAIN_TEST_CUTOFF=None, TRAIN_VALID_RATIO=
         val_data = lgb.Dataset(X_val, label=y_val, reference=train_data, feature_name=feature_names)
 
         # Set sensible parameters for the LightGBM model
+        '''
         params = {
             'objective': 'binary',
             'metric': 'auc', # or binary_logloss
@@ -749,6 +406,28 @@ def train_lightgbm(data, ticker=None, TRAIN_TEST_CUTOFF=None, TRAIN_VALID_RATIO=
             'bagging_fraction': 0.8,
             'bagging_freq': 5,
             'verbose': -1
+        }
+        '''
+
+        params = {
+            'objective': 'binary',
+            'lambda_l1': 0.7,
+            'lambda_l2': 0.7,
+            'min_gain_to_split': 0.2,
+            'max_bin': 127,
+            'boosting': 'gbdt',
+            'metric': 'auc', # or binary_logloss
+            'n_estimators': 50,
+            'is_unbalance': True, # use with oversampling too.
+            'max_depth': 4,  # was 4
+            'min_data_in_leaf': 5, # was 10
+            'min_child_samples': 5,
+            'early_stopping_round': 20,
+            'num_leaves': 15,
+            'learning_rate': 0.05,
+            'feature_fraction': 0.3,
+            'bagging_fraction': 0.7,
+            'bagging_freq': 5,
         }
 
         model = lgb.train(params, train_data, valid_sets=[val_data], num_boost_round=400, \
@@ -794,11 +473,16 @@ def test_lightgbm(model, data, TRAIN_TEST_CUTOFF, horizon, percent_threshold, ti
     df = data[ticker]
     dates = df.index[df.index >= TRAIN_TEST_CUTOFF]
     forecast = pd.DataFrame({'date': dates, 'predicted_label_future_buy_sell': y_pred, 'target_label_future_buy_sell': y_test})
+    # fill the last rows with nan
+    total_rows = len(forecast)
+    #forecast['target_label_future_buy_sell'][total_rows - horizon:] = np.nan
+    data_slice = forecast['target_label_future_buy_sell'][total_rows-horizon:].copy()
+    data_slice.loc[:] = np.nan
+    forecast.loc[total_rows-horizon:, 'target_label_future_buy_sell'] = data_slice
     FORECAST_DIR = f'./data/forecasts_{horizon}_day'
     Path(FORECAST_DIR).mkdir(parents=True, exist_ok=True)
     f_p = os.path.join(FORECAST_DIR, f'{ticker}.csv')
     forecast.to_csv(f_p, index=False)
-        
     return metrics
 
 
@@ -807,6 +491,7 @@ def compute_models(tickers, train_test_cutoff='2023-1-18', train_valid_ratio=0.7
                    data_prefix='', data_dir='./data/data-2d/', model_prefix='gbm', \
                    model_dir='./models', horizon=1, percent_threshold=0.0, \
                    perf_file='./models/model_performance.csv'):
+    print(f'train_test_cutoff: ', train_test_cutoff)
 
     sum_auc = 0.0
     sum_prec_bottom = 0.0
@@ -815,23 +500,27 @@ def compute_models(tickers, train_test_cutoff='2023-1-18', train_valid_ratio=0.7
     for ticker in tickers:
         try:
             DATADIR = f'{data_dir}{ticker}'
-            data = create_datasets(DATADIR=DATADIR, TRAIN_VALID_RATIO=train_valid_ratio, \
+            data_train = create_datasets(DATADIR=DATADIR, TRAIN_VALID_RATIO=train_valid_ratio, \
+                                TRAIN_TEST_CUTOFF=train_test_cutoff, ticker=ticker, horizon=horizon, \
+                                    percent_threshold=percent_threshold, for_current_day=False)
+            data_test = create_datasets(DATADIR=DATADIR, TRAIN_VALID_RATIO=train_valid_ratio, \
                                 TRAIN_TEST_CUTOFF=train_test_cutoff, ticker=ticker, horizon=horizon, \
                                     percent_threshold=percent_threshold, for_current_day=True)
-            model = train_lightgbm(data, ticker, TRAIN_TEST_CUTOFF=train_test_cutoff, \
+
+            model = train_lightgbm(data_train, ticker, TRAIN_TEST_CUTOFF=train_test_cutoff, \
                                 TRAIN_VALID_RATIO=train_valid_ratio, model_prefix=model_prefix)
 
 
             # Combine lists into triplets and filter for positive numbers
             result = [(name, num1, num2) for name, num1, num2 in \
-                    zip(data[ticker].columns.values, \
+                    zip(data_train[ticker].columns.values, \
                         model.feature_importance(importance_type='gain'), \
                         model.feature_importance(importance_type='split')) if num1 > 0 and num2 > 0]
 
             # Sort the output by the sum of the numbers in descending order
             result_sorted_descending = sorted(result, key=lambda x: x[1], reverse=True)
 
-            metrics = test_lightgbm(model, data, train_test_cutoff, horizon, percent_threshold, \
+            metrics = test_lightgbm(model, data_test, train_test_cutoff, horizon, percent_threshold, \
                                     ticker=ticker)
 
             print(f'auc: {metrics[0]:.3f}, prec_bottom: {metrics[1]:.3f}, prec_top: {metrics[2]:.3f}')
