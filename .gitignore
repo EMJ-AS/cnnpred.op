@@ -1,6 +1,15 @@
+# ignore generated output
+data
+
 # ignore local / s3 cache
 local
 s3
+local.bak
+s3.bak
+s3.new
+s3.old
+
+
 
 # ignore vim
 *.swp
