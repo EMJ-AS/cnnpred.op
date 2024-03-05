@@ -475,7 +475,6 @@ def test_lightgbm(model, data, TRAIN_TEST_CUTOFF, horizon, percent_threshold, ti
     forecast = pd.DataFrame({'date': dates, 'predicted_label_future_buy_sell': y_pred, 'target_label_future_buy_sell': y_test})
     # fill the last rows with nan
     total_rows = len(forecast)
-    #forecast['target_label_future_buy_sell'][total_rows - horizon:] = np.nan
     data_slice = forecast['target_label_future_buy_sell'][total_rows-horizon:].copy()
     data_slice.loc[:] = np.nan
     forecast.loc[total_rows-horizon:, 'target_label_future_buy_sell'] = data_slice
